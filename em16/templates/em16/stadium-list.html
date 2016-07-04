@@ -1,0 +1,31 @@
+{% extends "em16/base.html" %}
+{% load staticfiles %}
+{% block head %}
+    <title> Stadien - EM 2016 in Frankreich</title>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-lg-10 ">
+            {% for stadium in stadiums %}
+                <div class="col-lg-6">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <img class="img-responsive" src="{% static 'img/stadion_clippart.png' %}" alt="Stadion"/>
+                        </div>
+                        <div class="col-lg-8">
+                            <p>{{ stadium.city }}</p>
+                            <h4>{{ stadium.name }} </h4>
+                            <p>Kapazität: {{ stadium.capacity }}</p>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+
+            {% empty %}
+                <p>keine Gastgeber gefunden</p>
+
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

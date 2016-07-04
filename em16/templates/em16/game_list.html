@@ -1,0 +1,93 @@
+{% extends "em16/base.html" %}
+{% load staticfiles %}
+
+{% block head %}
+    {% with games|first as game_round %}
+        <title> {{ game_round.round.name }} - EM 2016 in Frankreich</title>
+    {% endwith %}
+{% endblock %}
+
+{% block content %}
+
+    <div class="row title">
+        <h5><a href="{% url 'em16:index' %}">Spiele</a> >> Überblick</h5>
+    </div>
+    <div class="row">
+        <div class="row">
+            {% include 'em16/include/nav_round_snippet.html' %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 ">
+            <h4 class="index-h4">Gruppenphase</h4>
+            {% regroup teams by group as groups_list %}
+            {% for group in groups_list %}
+                <div class="home-group">
+                    <div class="row">
+                        <a href="{% url 'em16:group-list' %}">
+                            <h4 class="text-center">{{ group.grouper }}</h4></a>
+                        <hr>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-9 col-lg-offset-2">
+                            {% for team in group.list %}
+                                <p>{{ forloop.counter }}.&emsp;
+                                    <a href="{% url 'em16:team-detail' team.id %}" title="{{ team.name }}">
+                                        <img class="flag_small" src="{{ team.flag.url }}" alt="{{ team.short }}"/>
+                                    </a>
+                                    {{ team.short }}
+                                </p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            <p></p>
+        </div>
+    </div>
+    {% for round in rounds %}
+        <div class="row">
+            <div class="col-lg-12 ">
+                {% if round.name|slice:":1" == 'G' %}
+                {% else %}
+                    <h4 class="index-h4">{{ round.name }}</h4>
+                    <table class="table-index-round-main">
+                        <tr>
+                            {% for game in games %}
+                                {% if round.id == game.round_id %}
+                                    <td>
+                                        <table class="table-index">
+                                            <tr>
+                                                {% if game.teamHome == Null %}
+
+                                                    <td>{{ game.teamHomeAlias }} -- : -- {{ game.teamGuestAlias }}</td>
+                                                {% else %}
+                                                    <td><p class="text-center"><img class="img-responsive flag_small"
+                                                                                    src="{{ game.teamHome.flag.url }}"/>{{ game.teamHome.short }}
+                                                    </p>
+                                                    </td>
+                                                    {% if game.teamGuestGoals == Null %}
+                                                        <td>-- : --</td>
+                                                    {% else %}
+                                                        <td><h4>{{ game.teamHomeGoals }}
+                                                            : {{ game.teamGuestGoals }}</h4>
+                                                            <p class="small">{{ game.others }}</p>
+                                                        </td>
+                                                    {% endif %}
+                                                    <td><p class="text-center"><img
+                                                            class="img-responsive flag_small"
+                                                            src="{{ game.teamGuest.flag.url }}"/>{{ game.teamGuest.short }}
+                                                    </p></td>
+                                                {% endif %}
+                                            </tr>
+                                        </table>
+                                    <td>
+                                {% endif %}
+                            {% endfor %}
+                        </tr>
+                    </table>
+                {% endif %}
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

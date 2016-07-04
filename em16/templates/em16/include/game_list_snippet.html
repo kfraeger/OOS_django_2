@@ -1,0 +1,66 @@
+{% load staticfiles %}
+
+{% regroup games by date as games_list %}
+
+{% for date in games_list %}
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12 text-info title_date_home">
+                <h4>{{ date.grouper|date:'l d. F Y' }}</h4>
+            </div>
+        </div>
+        {% for item in date.list %}
+            <div class="row game_list_home">
+
+                <div class="col-lg-2 text-right">
+
+                    {#  Anzeige der Gruppe für Gruppenphase #}
+                    {% if item.group != Null %}
+                        <a class="game-list-group"
+                           href="#">Gruppe {{ item.group }}
+                        </a>
+                    {% endif %}
+
+                </div>
+                <div class="col-lg-2 text-left game-list-time">
+                    <p>{{ item.time }} Uhr</p>
+                    <p>{{ item.host }}</p>
+                </div>
+                <div class="col-lg-3 text-right">
+                    {% if item.teamHome.id != Null %}
+                        <a href="{% url 'em16:team-detail' item.teamHome.id %}">{{ item.teamHome.name }}
+                            <img class="img-responsive flag_small img-right" src="{{ item.teamHome.flag.url }}"
+                                 alt="{{ item.teamHome.country }}"/>
+                        </a>
+                    {% else %}
+                        <p>{{ item.teamHomeAlias }}</p>
+                    {% endif %}
+                </div>
+                <div class="col-lg-2 text-center">
+                    {% if item.teamHomeGoals == Null %}
+                        <p>-- : --</p>
+                    {% else %}
+                        <h4>{{ item.teamHomeGoals }} : {{ item.teamGuestGoals }}</h4>
+                        <p class="text-center">{{ item.others }}</p>
+                    {% endif %}
+
+                </div>
+                <div class="col-lg-3 text-left">
+                    {% if item.teamGuest.id != Null %}
+                        <a href="{% url 'em16:team-detail' item.teamGuest.id %}">{{ item.teamGuest.name }}
+                            <img class="img-responsive flag_small img-left" src="{{ item.teamGuest.flag.url }}"
+                                 alt="{{ item.teamGuest.country }}"/>
+                        </a>
+                    {% else %}
+                        <p>{{ item.teamGuestAlias }}</p>
+                    {% endif %}
+
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+{% empty %}
+    <p>noch keine Spiele hinzugefügt</p>
+{% endfor %}

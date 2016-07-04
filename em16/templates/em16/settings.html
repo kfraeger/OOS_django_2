@@ -1,0 +1,59 @@
+{% extends "em16/base.html" %}
+{% block head %}
+    <title> Settings - EM 2016 in Frankreich</title>
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid title">
+        <h3>Einstellungen</h3>
+    </div>
+    <div class="row settings">
+        <div class="col-lg-2 col-lg-offset-2">
+            <h4>Spielplan</h4>
+            <span class="small">neue Spiele hinzufügen/ bearbeiten</span>
+        </div>
+        <div class="col-lg-2">
+            <a href="{% url 'em16:game-create' %}" class="btn btn-info" title="Spiel hinzufügen"><i
+                    class="glyphicon glyphicon-plus"></i></a>
+            <a href="{% url 'em16:game-edit' %}" class="btn btn-info" title="Spiel bearbeiten"><i
+                    class="glyphicon glyphicon-edit"></i></a>
+        </div>
+
+    </div>
+    <hr>
+    <div class="row settings">
+        <div class="col-lg-2 col-lg-offset-2">
+            <h4>Gruppen (A-F)</h4>
+            <span class="small">Spielergebnisse Gruppenphase bearbeiten</span>
+        </div>
+        <div class="col-lg-2">
+            <a href="{% url 'em16:group-edit' %}" class="btn btn-info" title="Gruppen bearbeiten"><i
+                    class="glyphicon glyphicon-edit"></i></a>
+        </div>
+    </div>
+    <hr>
+    <div class="row settings">
+        <div class="col-lg-2 col-lg-offset-2">
+            <h4>Teams</h4>
+            <span class="small">teilnehmende Mannschaften hinzufügen/ bearbeiten</span>
+        </div>
+        <div class="col-lg-2">
+            <a href="{% url 'em16:team-create' %}" class="btn btn-info" title="Team hinzufügen"><i
+                    class="glyphicon glyphicon-plus"></i></a>
+            <a href="{% url 'em16:team-edit' %}" class="btn btn-info" title="Team bearbeiten"><i
+                    class="glyphicon glyphicon-edit"></i></a>
+        </div>
+    </div>
+    <hr>
+
+{% endblock %}
+
+
+
+
+
+
+
+{% block footer %}
+    {{ block.super }}
+{% endblock %}

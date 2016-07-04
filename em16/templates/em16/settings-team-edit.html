@@ -1,0 +1,89 @@
+{% extends "em16/base.html" %}
+{% block head %}
+    <title> Teams - EM 2016 in Frankreich</title>
+{% endblock %}
+
+
+{% block content %}
+    <div class="row title">
+        <h5><a href="{% url 'em16:setting-list' %}">Einstellungen</a> >> Mannschaften | <span
+                class="small">bearbeiten</span></h5>
+    </div>
+
+    {% include 'em16/include/messages.html' %}
+
+
+    <div class="row">
+        <div class="col-lg-10 ">
+            {% for team in teams %}
+                <div class="row">
+                    <div class="col-lg-offset-1 col-lg-1">
+                        <img class="img-responsive flag_small" src="{{ team.flag.url }}" alt="{{ team.name }}"/>
+                    </div>
+                    <div class=" col-lg-3">
+                        <p class="text-left text-info">{{ team.name }} ({{ team.short }})</p>
+                        <p class="small">Trainer: {{ team.trainer }}</p>
+                    </div>
+                    <div class="col-lg-2">
+                        <a href="{% url 'em16:team-update' team.id %}" class="glyphicon glyphicon-edit btn btn-info"
+                           title="Team bearbeiten"></a>
+
+                        <a href="{% url 'em16:team-delete' team.id %}" class="glyphicon glyphicon-trash btn btn-info"
+                           title="Team löschen"></a>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-lg-5 col-lg-offset-2">
+                        <hr>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3 col-lg-offset-2">
+                        <button class="glyphicon glyphicon-menu-down btn btn-xs bg-info" data-toggle="collapse"
+                                data-target="#{{ team.name }} "></button>&emsp;
+                        <span class="text-uppercase text-info">Spielerdetails</span>
+                    </div>
+                    <div class="col-lg-1 ">
+                        <a href="{% url 'em16:player-create' team.id %}"
+                           class="glyphicon glyphicon-plus btn btn-xs bg-info"
+                           title="neuen Spieler zur Mannschaft hinzufügen"></a>
+                    </div>
+                    <div class="row">
+
+                        <div id="{{ team.name }}" class="collapse col-lg-10 col-lg-offset-2 ">
+                            <table class=" settings-player-list table-striped">
+                                {% for player in players %}
+                                    {% if team.id == player.team_id %}
+                                        <tr>
+                                            <td><img src="{{ player.img.url }}" alt="{{ player.surname }}"/></td>
+                                            <td>{{ player.name }} {{ player.surname }} | {{ player.number }}</td>
+                                            <td>{{ player.position }}</td>
+                                            <td>
+                                                <a href="{% url 'em16:player-update' player.id %}"
+                                                   class="glyphicon glyphicon-edit btn btn-xs bg-info"
+                                                   title="Spieler bearbeiten"></a>
+                                                <a href="{% url 'em16:player-delete' player.id %}"
+                                                   class="glyphicon glyphicon-trash btn btn-xs bg-info"
+                                                   title="Spieler löschen"></a>
+                                            </td>
+                                        </tr>
+                                    {% endif %}
+                                {% endfor %}
+
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+                <hr class="settings-hr">
+
+            {% empty %}
+                <p>Keine Mannschaften zum bearbeiten gefunden.</p>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+{% block footer %}
+    {{ block.super }}
+{% endblock %}

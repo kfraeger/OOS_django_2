@@ -1,0 +1,81 @@
+{% extends "em16/base.html" %}
+{% block head %}
+    <title> Gruppen - EM 2016 in Frankreich</title>
+{% endblock %}
+
+
+{% block content %}
+    <div class="row title">
+        <h5><a href="{% url 'em16:setting-list' %}">Einstellungen</a> >> Gruppen | <span
+                class="small">bearbeiten</span></h5>
+    </div>
+    <div class="row">
+        <div class="col-lg-10 ">
+            {% for group in groups %}
+                <div class="row">
+                    <div class="col-lg-offset-1 col-lg-10">
+                        <h4 class="text-uppercase text-info">Gruppe {{ group.name }}</h4>
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>Team</th>
+                                <th>Spiele</th>
+                                <th>Siege</th>
+                                <th>Unentschieden</th>
+                                <th>Niederlagen</th>
+                                <th>Tore</th>
+                                <th>Gegentore</th>
+                                <th>Tordifferenz</th>
+                                <th>Punkte</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for team in teams %}
+                                {% if group.id == team.group_id %}
+                                    <tr>
+                                        <td>
+                                            <p class="text-left"><strong>{{ team.name }}</strong></p>
+                                        </td>
+                                        <td>
+                                            <p>{{ team.games_played }}</p>
+                                        </td>
+                                        <td>
+                                            <p class="text-info">{{ team.win }}</p>
+                                        </td>
+                                        <td>
+                                            <p class="text-info">{{ team.draw }}</p>
+                                        </td>
+                                        <td>
+                                            <p class="text-info">{{ team.lost }}</p>
+                                        </td>
+                                        <td>
+                                            <p class="text-info">{{ team.goal }}</p>
+                                        </td>
+                                        <td>
+                                            <p class="text-info">{{ team.goal_conceded }}</p>
+                                        </td>
+                                        <td>
+                                            <p class="text-info">{{ team.tordifferenz }}</p>
+                                        </td>
+                                        <td>
+                                            <p class="text-info">{{ team.points }}</p>
+                                        </td>
+                                        <td>
+                                            <a href="{% url 'em16:group-update' team.id %}"
+                                               class="glyphicon glyphicon-edit btn btn-info"
+                                               title="Gruppe bearbeiten"></a>
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+{% block footer %}
+    {{ block.super }}
+{% endblock %}

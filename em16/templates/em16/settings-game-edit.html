@@ -1,0 +1,66 @@
+{% extends "em16/base.html" %}
+{% block head %}
+    <title> Spielplan - EM 2016 in Frankreich</title>
+{% endblock %}
+
+
+{% block content %}
+    <div class="row title">
+        <h5><a href="{% url 'em16:setting-list' %}">Einstellungen</a> >> Spielplan | <span
+                class="small">bearbeiten</span></h5>
+    </div>
+    <div class="row">
+        <div class="col-lg-10 ">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Datum/Uhrzeit</th>
+                    <th>Runde</th>
+                    <th>Auslosung/Ergebnis</th>
+                    <th>Optionen</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for game in games %}
+
+                    <tr>
+                        <td>
+                            <p class="text-center"><strong>{{ game.date }} |</strong> {{ game.time }}</p>
+                        </td>
+                        <td>
+                            <p>{{ game.round }}</p>
+                        </td>
+                        {% if game.teamHome.id != Null %}
+                            <td>
+                                <p class="text-info">{{ game.teamHome.short }}
+                                    {% if game.teamGuestGoals == Null %}
+                                        -- : --
+                                    {% else %}
+                                        {{ game.teamHomeGoals }} : {{ game.teamGuestGoals }}
+                                    {% endif %}
+                                    {{ game.teamGuest.short }}</p>
+                            </td>
+                        {% else %}
+                            <td>
+                                <p class="text-info">{{ game.teamHomeAlias }} : {{ game.teamGuestAlias }}</p>
+                            </td>
+                        {% endif %}
+                        <td>
+                            <a href="{% url 'em16:game-update' game.id %}" class="glyphicon glyphicon-edit btn btn-info"
+                               title="Spiel bearbeiten"></a>
+
+                            <a href="{% url 'em16:game-delete' game.id %}"
+                               class="glyphicon glyphicon-trash btn btn-info" title="Spiel löschen"></a>
+                        </td>
+                    </tr>
+                {% empty %}
+                    <p>Keine Mannschaften zum bearbeiten gefunden.</p>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+{% block footer %}
+    {{ block.super }}
+{% endblock %}

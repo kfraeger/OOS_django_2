@@ -1,0 +1,29 @@
+<!-- Team Delete confirm template -->
+{% extends "em16/base.html" %}
+{% load staticfiles %}
+{% block head %}
+    <title> Spielplan bearbeiten - EM 2016 in Frankreich</title>
+{% endblock %}
+
+{% block content %}
+    <div class="row title">
+        <h5><a href="{% url 'em16:setting-list' %}">Einstellungen</a> >> Spielplan | <span class="small">bearbeiten</span></h5>
+    </div>
+    <div class="row">
+        <div class="col-lg-10 ">
+            <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% include 'em16/include/form-template-snippet.html' %}
+                <div class="form-group">
+                    <div class="col-lg-8 col-lg-offset-2">
+                        <a href="{% url 'em16:game-edit' %}" type="button" class="btn btn-default">Abbrechen</a>
+                        <button type="submit" class="btn btn-success" value="Update">Ändern</button>
+                        <a href="{% url 'em16:team-create' %}" class="btn btn-info" target="_blank"><i class="glyphicon glyphicon-plus"></i> Team hinzufügen</a>
+                    </div>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+{% endblock %}

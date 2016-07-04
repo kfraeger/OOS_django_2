@@ -1,0 +1,33 @@
+{% extends "em16/base.html" %}
+{% block head %}
+    <title> Teams - EM 2016 in Frankreich</title>
+{% endblock %}
+{% block content %}
+    <div class="container-fluid title">
+        <h3>Mannschaften der EM 2016</h3>
+    </div>
+    <div class="row">
+        <div class="col-lg-10 ">
+            {% for team in teams %}
+                <div class="col-lg-6">
+                    <div class="row teams table-bordered">
+                        <a href="{% url 'em16:team-detail' team.id %}">
+                            <div class="col-lg-3">
+                                <img class="img-responsive flag" src="{{ team.flag.url }}" alt="{{ team.name }}"/>
+                            </div>
+                            <div class="col-lg-9">
+                                <h3>{{ team.name }}</h3>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            {% empty %}
+                <p>Keine Mannschaften gefunden.</p>
+
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+{% block footer %}
+    {{ block.super }}
+{% endblock %}

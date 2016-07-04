@@ -1,0 +1,44 @@
+{% extends "em16/base.html" %}
+{% load staticfiles %}
+{% block head %}
+    <title> {{ team.name }} - EM 2016 in Frankreich</title>
+{% endblock %}
+
+{% block content %}
+    <div class="row title">
+        <h5><a href="{% url 'em16:team-list' %}">Mannschaften</a> >> {{ team.name }}</h5>
+    </div>
+    <div class="row">
+        <div class="col-lg-10 ">
+            <div class="container-fluid ">
+                <div class="row">
+                    <div class="col-lg-2">
+                        <img class="team-detail-flag" src="{{ team.flag.url }}" alt="{{ team.name }}"/>
+                    </div>
+                    <div class="col-lg-10 team-detail">
+                        <h2>{{ team.name }} <span class="small">({{ team.short }})</span></h2>
+                        <p>Trainer: {{ team.trainer }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            {% for player in players %}
+                <div class="col-lg-3 player_list">
+                    <img src="{{ player.img.url }}" alt="{{ player.surname }}"/>
+                    <p>{{ player.position }}</p>
+                    <h5>{{ player.name }}<br>{{ player.surname }}</h5>
+                    <h5>| {{ player.number }}</h5>
+
+                </div>
+            {% empty %}
+                <div class="col-lg-3 player_list">
+                    <p>Keinen Spieler gefunden.</p>
+                </div>
+
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

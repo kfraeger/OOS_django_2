@@ -1,0 +1,36 @@
+<!-- Team Delete confirm template -->
+{% extends "em16/base.html" %}
+{% load staticfiles %}
+{% block head %}
+    <title> Gruppe bearbeiten - EM 2016 in Frankreich</title>
+{% endblock %}
+
+{% block content %}
+    <div class="row title">
+        <h5><a href="{% url 'em16:setting-list' %}">Einstellungen</a> >> Gruppen | <span class="small">bearbeiten</span></h5>
+    </div>
+    <div class="row">
+        <div class="col-lg-10 ">
+            <div class="row">
+                <div class="col-lg-offset-1 col-lg-2">
+                        <h4>{{ team.country }} | <span class="small">Gruppe {{ team.group }}</span></h4>
+                    </div>
+
+            <div class="col-lg-offset-1 col-lg-8">
+            <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% include 'em16/include/form-template-snippet.html' %}
+                <div class="form-group">
+                    <div class="col-lg-8 col-lg-offset-2">
+                        <a href="{% url 'em16:team-edit' %}" type="button" class="btn btn-default">Abbrechen</a>
+                        <button type="submit" class="btn btn-success" value="Update">Ändern</button>
+                    </div>
+                </div>
+
+            </form>
+            </div>
+</div>
+
+        </div>
+    </div>
+{% endblock %}

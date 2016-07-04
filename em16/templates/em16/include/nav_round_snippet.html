@@ -1,0 +1,12 @@
+<div class="col-lg-9">
+    <nav class="container-fluid">
+        <ul class="nav navbar-nav">
+            {% for round in rounds %}
+
+                <li><a href="{% url 'em16:round-detail' round.id %}">{{ round.name }}</a></li>
+
+            {% endfor %}
+        </ul>
+    </nav>
+</div>
+

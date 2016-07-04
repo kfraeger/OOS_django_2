@@ -1,0 +1,29 @@
+<!-- Team Delete confirm template -->
+{% extends "em16/base.html" %}
+{% load staticfiles %}
+{% block head %}
+    <title> Settings >> Spiel löschen</title>
+{% endblock %}
+
+{% block content %}
+    <div class="row title">
+        <h5><a href="{% url 'em16:setting-list' %}">Einstellungen</a> >> Spiel | <span class="small">löschen</span></h5>
+    </div>
+    <div class="row">
+        <div class="col-lg-10 ">
+            <form action="" method="post">{% csrf_token %}
+                <div class="modal-header">
+                    <h4 class="modal-title">Löschen bestätigen</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Möchten Sie wirklich <strong>{{ game.date }} {{ game.time }}</strong> löschen?</p>
+                </div>
+                <div class="modal-footer">
+                    <a href="{% url 'em16:game-edit' %}" type="button" class="btn btn-default">Abbrechen</a>
+                    <button type="submit" class="btn btn-success" value="Confirm">Löschen</button>
+
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
