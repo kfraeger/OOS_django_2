@@ -41,7 +41,7 @@ class TeamCreateView(generic.CreateView):
 
     template_name = 'em16/forms/team_form.html'
     model = Team
-    fields = ['name', 'short', 'group', 'groupAlias', 'trainer', 'flag']
+    fields = ['name', 'short', 'group', 'trainer', 'flag']
     success_url = reverse_lazy('em16:team-list')
 
 
